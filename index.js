@@ -20,6 +20,10 @@ const config = require('./config/database');
  * هimport routes
  */
 //delimiter for adding generated module
+ const comments = require('./api/comments/route');
+
+ const posts = require('./api/posts/route');
+
 
 
 
@@ -49,6 +53,8 @@ mongoose.connection.on('connected', () => {
 
 app.use('/user', user);
 //delimiter for adding generated apis
+ app.use('/comments', comments);
+ app.use('/posts', posts);
 
 
 app.listen(port, () => {

@@ -23,8 +23,8 @@ async function register(req, res) {
         return res.status(200).json({ token: `Bearer ${token}`, msg: 'User registred', createdUser });
 
 
-    } catch (err) {
-        return res.status(500).send({ msg: "something went wrong ", error: err.stack || err.message });
+    } catch (error) {
+        return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
     }
 
 }
@@ -55,8 +55,8 @@ async function authenticate(req, res) {
         return res.status(200).json({ token: `Bearer ${token}`, msg: 'User authenticated' });
 
 
-    } catch (err) {
-        return res.status(500).send({ msg: "something went wrong ", error: err.stack || err.message });
+    } catch (error) {
+        return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
     }
 
 }
@@ -69,8 +69,8 @@ async function demoProfile(req, res) {
             throw 'you are not authenticated';
 
         return res.send(user);
-    } catch (err) {
-        return res.status(500).send({ msg: "something went wrong ", error: err.stack || err.message });
+    } catch (error) {
+        return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
 
     }
 
