@@ -30,12 +30,10 @@ async function addPost(req, res) {
     try {
         let post = req.body;
         let createdPost = await Posts.create(post);
-        return res.send({ msg: createdPost });
+        return res.redirect('/posts/get')
     } catch (error) {
         return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
-
     }
-
 }
 async function deletePosts(req, res) {
     return res.send(await Posts.remove({}))

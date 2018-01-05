@@ -13,14 +13,14 @@ async function register(req, res) {
 
         user.password = await userService.hashPassword(user.password);
 
-        let token = await userService.generatetoken(user);
+        // let token = await userService.generatetoken(user);
 
         let createdUser = await User.create(user);
 
         if (!createdUser)
             return res.send({ msg: "faild to create user " });
 
-        return res.status(200).json({ token: `Bearer ${token}`, msg: 'User registred', createdUser });
+        return res.status(200).json({ msg: 'User registred', createdUser });
 
 
     } catch (error) {
@@ -64,11 +64,8 @@ async function authenticate(req, res) {
 
 async function demoProfile(req, res) {
     try {
-        let user = await userService.currentUser(req.token);
-        if (!user)
-            throw 'you are not authenticated';
-
-        return res.send(user);
+        console.log('iam here ');
+        return res.send(req.user);
     } catch (error) {
         return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
 
@@ -79,4 +76,7 @@ async function demoProfile(req, res) {
 async function resturnAllusers(req, res) {
     return res.send(await User.find({}).select('-password'));
 }
-module.exports = { authenticate, register, demoProfile, resturnAllusers };
+function returnCurrentUser(req, res) {
+    return res.send(req.user || 'not user');
+}
+module.exports = { authenticate, register, demoProfile, resturnAllusers, returnCurrentUser };

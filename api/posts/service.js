@@ -1,9 +1,12 @@
- 
-    /**
-    * func1(){ res.send('func1'); }
-    * func2(){res.send('func2');}
-    * func3(){res.send('func3');}
-    */
+/**
+ *  
+ * 
+ */
+function howAddPost() {
 
-    // add your functions to modules,  module.exports = { func1 , func2 , func3}
-    module.exports = {};
+}
+function howUpdateAndRemovePost() {
+
+}
+// add your functions to modules,  module.exports = { func1 , func2 , func3}
+module.exports = {};

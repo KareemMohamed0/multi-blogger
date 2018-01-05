@@ -14,9 +14,9 @@ const CommentsScheme = mongoose.Schema({
         default: Date.now
 
     },
-    subComment: {
+    subComment: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comments'
-    }
+    }]
 });
 module.exports = mongoose.model('Comments', CommentsScheme);

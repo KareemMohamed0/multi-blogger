@@ -18,14 +18,14 @@ const PostsScheme = mongoose.Schema({
     image: {
         type: String
     },
-    like: {
-        type: Number,
-        default: 0
-    },
-    disLike: {
-        type: Number,
-        default: 0
-    },
+    like: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    disLike: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comments'

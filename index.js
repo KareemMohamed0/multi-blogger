@@ -16,26 +16,23 @@ const bodyparser = require('body-parser');
 const port = process.env.PORT || 3000;
 const config = require('./config/database');
 
+const passport = require('passport');
+
 /**
  * هimport routes
  */
 //delimiter for adding generated module
- const comments = require('./api/comments/route');
-
- const posts = require('./api/posts/route');
-
-
-
-
-
+const comments = require('./api/comments/route');
+const posts = require('./api/posts/route');
 const user = require('./api/user/route');
 
 
 app.use(cors());
 app.use(bodyparser.json());
-
+// app.use(bodyparser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public/')));
-
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 
 
@@ -53,8 +50,8 @@ mongoose.connection.on('connected', () => {
 
 app.use('/user', user);
 //delimiter for adding generated apis
- app.use('/comments', comments);
- app.use('/posts', posts);
+app.use('/comments', comments);
+app.use('/posts', posts);
 
 
 app.listen(port, () => {
