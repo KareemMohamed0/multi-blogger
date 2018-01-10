@@ -62,21 +62,61 @@ async function authenticate(req, res) {
 }
 
 
-async function demoProfile(req, res) {
+async function userProfile(req, res) {
     try {
-        console.log('iam here ');
-        return res.send(req.user);
+        return res.send({ msg: req.user });
     } catch (error) {
         return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
 
     }
-
 }
 
 async function resturnAllusers(req, res) {
-    return res.send(await User.find({}).select('-password'));
+    try {
+        let users = await User.find({}).select('-password');
+        return res.send({ msg: users });
+
+    } catch (error) {
+        return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
+
+    }
 }
-function returnCurrentUser(req, res) {
-    return res.send(req.user || 'not user');
+
+async function returnUserById(req, res) {
+    try {
+        let _id = req.params._id;
+
+        let user = await User.findById(_id).select('-password');
+
+        return res.send({ msg: user });
+
+    } catch (error) {
+        return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
+
+    }
 }
-module.exports = { authenticate, register, demoProfile, resturnAllusers, returnCurrentUser };
+
+
+async function updateUserProfile(req, res) {
+    try {
+
+        let updateUser = req.body;
+        let currentUserId = req.user._id;
+
+        if (!userService.rePasswordComp(updateUser.password, updateUser.rePassword))
+            return res.status(400).send({ msg: 'Password does not match the confirm password' });
+
+        updateUser.password = await userService.hashPassword(updateUser.password);
+
+        let newProfile = await User.update({ _id: currentUserId }, updateUser);
+        if (!newProfile)
+            return res.status(400).send({ msg: 'faild to update your profile' });
+
+        return res.send({ msg: newProfile });
+
+    } catch (error) {
+        return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
+
+    }
+}
+module.exports = { authenticate, register, userProfile, resturnAllusers, updateUserProfile, returnUserById };

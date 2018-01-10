@@ -20,9 +20,15 @@ async function compareHashPassword(password, hash) {
     return await bcrypt.compare(password, hash);
 }
 
+function rePasswordComp(password1, password2) {
+    if (password1 != password2)
+        return false;
+    return true;
+}
+
 /**
  * test pasport js 
  */
 
 
-module.exports = { compareHashPassword, userValidation, hashPassword, generatetoken };
+module.exports = { compareHashPassword, userValidation, hashPassword, generatetoken, rePasswordComp };

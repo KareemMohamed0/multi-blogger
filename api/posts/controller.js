@@ -16,9 +16,9 @@ async function getPosts(req, res) {
 async function getPost(req, res) {
 
     try {
-        let id = req.params.id;
-        let post = await Posts.findById(id);
-        return res.send({ msg: post });
+        let _id = req.params._id;
+        let posts = await Posts.findById(_id);
+        return res.send({ msg: posts });
 
     } catch (error) {
         return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
@@ -35,6 +35,7 @@ async function addPost(req, res) {
         return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
     }
 }
+
 async function deletePosts(req, res) {
     return res.send(await Posts.remove({}))
 }

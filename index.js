@@ -14,7 +14,7 @@ const bodyparser = require('body-parser');
 
 
 const port = process.env.PORT || 3000;
-const config = require('./config/database');
+const dbConfig = require('./api/global-service').globalVariable.databaseLocal;
 
 const passport = require('passport');
 
@@ -37,7 +37,7 @@ require('./config/passport')(passport);
 
 
 //Data base config
-mongoose.connect(config.databaseLocal);
+mongoose.connect(dbConfig);
 
 mongoose.connection.on('connected', () => {
     console.log(`connected`)

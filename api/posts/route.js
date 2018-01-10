@@ -5,9 +5,10 @@ const postsController = require('./controller');
 
 
 router.get('/get', postsController.getPosts);
-router.get('/get/:id', postsController.getPost);
+router.get('/get/:_id', postsController.getPost);
 router.post('/add', postsController.addPost);
 router.delete('/delete', postsController.deletePosts)
+// router.put('update',postsController.updatePost)
 
 
 

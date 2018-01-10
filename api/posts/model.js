@@ -5,11 +5,11 @@ const PostsScheme = mongoose.Schema({
     title: {
         type: String,
         required: true,
-        min: 3
+        minlength: 3
     },
     content: {
         type: String,
-        min: 3
+        minlength: 3
     },
     date: {
         type: Date,
