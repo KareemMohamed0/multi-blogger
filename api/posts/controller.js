@@ -29,8 +29,12 @@ async function getPost(req, res) {
 async function addPost(req, res) {
     try {
         let post = req.body;
+        let userId = req.user.id;
+
         let createdPost = await Posts.create(post);
-        return res.redirect('/posts/get')
+
+        return res.redirect(`/user/assignpost?postId=${createdPost.id}&userId=${userId}`);
+
     } catch (error) {
         return res.status(500).send({ msg: "something went wrong ", error: error.stack || error.message });
     }

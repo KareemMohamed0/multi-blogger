@@ -84,9 +84,9 @@ async function resturnAllusers(req, res) {
 
 async function returnUserById(req, res) {
     try {
-        let _id = req.params._id;
+        let id = req.params.id;
 
-        let user = await User.findById(_id).select('-password');
+        let user = await User.findById(id).select('-password');
 
         return res.send({ msg: user });
 
@@ -119,4 +119,20 @@ async function updateUserProfile(req, res) {
 
     }
 }
-module.exports = { authenticate, register, userProfile, resturnAllusers, updateUserProfile, returnUserById };
+
+async function assignPost2user(req, res) {
+    try {
+        let postId = req.query.postId;
+        let userId = req.query.userId;
+
+        let assignPost = await User.update({ _id: userId }, { $push: { post: postId } });
+        return res.send(assignPost);
+
+    } catch (error) {
+        return res.status(500).send({ msg: "sd something went wrong ", error: error.stack || error.message });
+
+    }
+}
+
+
+module.exports = { authenticate, register, userProfile, resturnAllusers, updateUserProfile, returnUserById, assignPost2user };
